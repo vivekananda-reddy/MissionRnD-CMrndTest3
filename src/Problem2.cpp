@@ -71,40 +71,41 @@ struct node{
 	struct node *right;
 };
 
-int traversedllndtree(struct node_dll **, struct node *);
+int traversedllndtree(struct node_dll **, struct node **);
 int is_identical(struct node_dll *head, struct node *root){
 	int ans;
 	struct node_dll *temp = head;
+	struct node *roott = root;
 	if (head==NULL||root==NULL)
 		return -1;
 
-	ans = traversedllndtree(&temp, root);
-	/*if (temp != NULL)
+	ans = traversedllndtree(&temp, &roott);
+	if (temp != NULL||roott->right!=NULL)
 	{
 		return 0;
-	}*/
+	}
 	return ans;
 }
 
-int traversedllndtree(struct node_dll **temp, struct node *root)
+int traversedllndtree(struct node_dll **temp, struct node **roott)
 {
 	int ans;
-	if (root == NULL)
+	if ((*roott) == NULL)
 	{
 		return 1;
 	}
 
-	ans = traversedllndtree(temp, root->left);
+	ans = traversedllndtree(temp,&(*roott)->left);
 	
 	if (ans == 0)
 	{
 		return 0;
 	}
-	if (root->data != (*temp)->data)
+	if ((*roott)->data != (*temp)->data)
 	{
 		return 0;
 	}
 	*temp = (*temp)->next;
-	ans = traversedllndtree(temp, root);
+	ans = traversedllndtree(temp, &(*roott)->right);
 	return ans;
 }
