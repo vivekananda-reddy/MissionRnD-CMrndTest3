@@ -50,7 +50,36 @@ struct node{
 	struct node *right;
 };
 
-
+long traversethetree(struct node*, long);
 int get_missing_value(struct node *root,int n){
-    return -1;
+	long sum,totalsum,ans;
+	if (root==NULL||n==0)
+		return -1;
+	sum = traversethetree(root,0);
+	if (n > 0)
+	{
+		totalsum = (n*(n + 1)) / 2;
+		return(totalsum - sum);
+	}
+	else
+	{
+		n = n*-1;
+		sum = sum*-1;
+		totalsum = (n*(n + 1)) / 2;
+		ans=-(totalsum - sum);
+
+	}
+
+}
+
+long traversethetree(struct node*root, long sum)
+{
+	if (root == NULL)
+	{
+		return sum;
+	}
+	sum = sum + root->data;
+	sum = traversethetree(root->left,sum);
+	sum = traversethetree(root->right, sum);
+	return sum;
 }
